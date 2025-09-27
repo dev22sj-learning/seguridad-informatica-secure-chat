@@ -1,0 +1,2 @@
+# No se necesitan dependencias externas para el prototipo básico
+# Se mantiene para futuras expansiones

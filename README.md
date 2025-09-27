@@ -1,8 +1,6 @@
 
 # Comandos para Ejecutar con Docker
 
-## Deploy
-
 ```bash
 # 1. Reconstruir y ejecutar
 docker-compose down

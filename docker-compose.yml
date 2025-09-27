@@ -18,7 +18,7 @@ services:
     container_name: chat-cliente-gerente
     networks:
       - chat-network
-    command: tail -f /dev/null  # Mantiene el contenedor vivo
+    # command: tail -f /dev/null  # Mantiene el contenedor vivo
     tty: true
     stdin_open: true
     depends_on:
@@ -30,7 +30,7 @@ services:
     container_name: chat-cliente-subgerente
     networks:
       - chat-network
-    command: tail -f /dev/null
+    # command: tail -f /dev/null
     tty: true
     stdin_open: true
     depends_on:

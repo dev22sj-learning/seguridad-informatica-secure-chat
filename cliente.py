@@ -34,16 +34,16 @@ class ClienteChat:
                 mensaje_cifrado = self.socket.recv(1024).decode('utf-8', errors='ignore')
                 if mensaje_cifrado:
                     mensaje_claro = self.rc4.cifrar_descifrar(mensaje_cifrado)
-                    print(f"\n📨 {mensaje_claro}\nTú: ", end='', flush=True)
+                    print(f"\n {mensaje_claro}\nTú: ", end='', flush=True)
             except:
                 if self.conectado:
-                    print("\n❌ Conexión perdida con el servidor")
+                    print("\n Conexión perdida con el servidor")
                     self.conectado = False
                 break
     
     def conectar(self, host='servidor', puerto=8080):
         try:
-            print(f"🔗 Conectando a {host}:{puerto}...")
+            print(f"Conectando a {host}:{puerto}...")
             self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.socket.settimeout(60)
             self.socket.connect((host, puerto))
@@ -60,7 +60,7 @@ class ClienteChat:
             
             respuesta = self.socket.recv(1024).decode()
             if respuesta.startswith("OK:"):
-                print("✅ " + respuesta[3:])
+                print("" + respuesta[3:])
                 
                 # Iniciar hilo para escuchar mensajes
                 hilo_escucha = threading.Thread(target=self.escuchar_mensajes)
@@ -69,17 +69,17 @@ class ClienteChat:
                 
                 return True
             else:
-                print("❌ " + respuesta[6:])
+                print("" + respuesta[6:])
                 return False
                 
         except Exception as e:
-            print(f"❌ Error de conexión: {e}")
+            print(f"Error de conexión: {e}")
             return False
     
     def iniciar_chat(self):
-        print("\n💬 Chat seguro iniciado. Escribe 'salir' para terminar.")
-        print("🔒 Todos los mensajes están cifrados con RC4")
-        print("💡 Usa '@usuario mensaje' para mensajes privados\n")
+        print("\n Chat seguro iniciado. Escribe 'salir' para terminar.")
+        print("Todos los mensajes están cifrados con RC4")
+        print("Usa '@usuario mensaje' para mensajes privados\n")
         
         while self.conectado:
             try:
@@ -98,10 +98,10 @@ class ClienteChat:
                 self.socket.send(mensaje_cifrado.encode())
                 
             except KeyboardInterrupt:
-                print("\n👋 Sesión terminada")
+                print("\n Sesión terminada")
                 break
             except Exception as e:
-                print(f"❌ Error: {e}")
+                print(f"Error: {e}")
                 break
         
         self.conectado = False

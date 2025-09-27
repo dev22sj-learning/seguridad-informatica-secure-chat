@@ -91,15 +91,15 @@ class ServidorChat:
                 rc4 = RC4Simulado(self.clave_secreta)
                 self.clientes[usuario] = {'conexion': conexion, 'rc4': rc4}
                 
-                self.log_evento(f"✅ Usuario {usuario} autenticado desde {cliente_ip}")
-                self.log_evento(f"📊 Clientes conectados: {list(self.clientes.keys())}")
+                self.log_evento(f"Usuario {usuario} autenticado desde {cliente_ip}")
+                self.log_evento(f"Clientes conectados: {list(self.clientes.keys())}")
                 
                 # Notificar a todos los clientes
-                mensaje_bienvenida = f"🔔 {usuario} se ha unido al chat"
+                mensaje_bienvenida = f"{usuario} se ha unido al chat"
                 self.broadcast(mensaje_bienvenida)
                 
                 # Enviar instrucciones al cliente
-                instrucciones = "\n💬 Chat seguro activo. Comandos:\n- @usuario mensaje → Mensaje privado\n- listar → Ver usuarios conectados\n- salir → Salir del chat\n"
+                instrucciones = "\n Chat seguro activo. Comandos:\n- @usuario mensaje → Mensaje privado\n- listar → Ver usuarios conectados\n- salir → Salir del chat\n"
                 conexion.send(rc4.cifrar_descifrar(instrucciones).encode())
                 
             else:
@@ -131,10 +131,10 @@ class ServidorChat:
                         mensaje_privado = partes[1]
                         
                         if self.enviar_mensaje_privado(destino, mensaje_privado, usuario):
-                            confirmacion = f"✅ Mensaje enviado a {destino}"
+                            confirmacion = f"Mensaje enviado a {destino}"
                             conexion.send(rc4.cifrar_descifrar(confirmacion).encode())
                         else:
-                            error_msg = f"❌ Usuario {destino} no encontrado o desconectado"
+                            error_msg = f"Usuario {destino} no encontrado o desconectado"
                             conexion.send(rc4.cifrar_descifrar(error_msg).encode())
                 else:
                     # Mensaje broadcast
@@ -142,13 +142,13 @@ class ServidorChat:
                     self.broadcast(mensaje_publico, usuario_origen=usuario)
                 
         except Exception as e:
-            self.log_evento(f"❌ Error con {cliente_ip}: {e}")
+            self.log_evento(f"Error con {cliente_ip}: {e}")
         finally:
             if usuario and usuario in self.clientes:
                 del self.clientes[usuario]
-                mensaje_desconexion = f"🔔 {usuario} ha abandonado el chat"
+                mensaje_desconexion = f"{usuario} ha abandonado el chat"
                 self.broadcast(mensaje_desconexion)
-                self.log_evento(f"📤 Usuario {usuario} desconectado")
+                self.log_evento(f"Usuario {usuario} desconectado")
             conexion.close()
     
     def verificar_credenciales(self, usuario, password):
@@ -165,7 +165,7 @@ class ServidorChat:
         servidor.bind((self.host, self.puerto))
         servidor.listen(5)
         
-        self.log_evento(f"🚀 Servidor iniciado en {self.host}:{self.puerto}")
+        self.log_evento(f"Servidor iniciado en {self.host}:{self.puerto}")
         self.log_evento("Esperando conexiones...")
         
         try:
@@ -175,7 +175,7 @@ class ServidorChat:
                 hilo.daemon = True
                 hilo.start()
         except KeyboardInterrupt:
-            self.log_evento("⏹️ Servidor detenido por el usuario")
+            self.log_evento("Servidor detenido por el usuario")
         finally:
             servidor.close()
 
